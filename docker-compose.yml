@@ -1,0 +1,35 @@
+version: "2.1"
+
+services:
+
+  # docker-compose run --rm hubot to interact with the bot.
+  # We need to override entrypoint because for some reason the 'shell' adapter
+  # does not play nice with the s6-overlay init system. So just start it directly
+  hubot:
+    extends: cli
+    entrypoint: "bin/hubot"
+    environment:
+      HUBOT_NAME: yetibot
+      HUBOT_ADAPTER: shell
+
+  # docker-compose run --rm install to install node dependencies via the container.
+  # Do this first!
+  install:
+    extends: cli
+    entrypoint: "npm install"
+
+  # docker-compose run --rm update to update node dependencies via the container.
+  # Do this first!
+  update:
+    extends: cli
+    entrypoint: "npm update"
+
+  # Base dependencies of the other hubot services.
+  # docker-compose run --rm cli to connect to a running phasetreebot container.
+  cli:
+    build: .
+    working_dir: "/code"
+    entrypoint: "/bin/sh"
+    network_mode: "bridge"
+    volumes:
+      - .:/code
