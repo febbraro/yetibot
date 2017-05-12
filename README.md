@@ -137,4 +137,6 @@ Yetibot runs with the Slack adapter
 ## Deployment
 
 Yetibot is deployed to as a Docker container using the [febbraro/yetibot](https://hub.docker.com/r/febbraro/yetibot/) 
-Docker Image. It is deployed on an EC2 instance.
+Docker Image. It is deployed on an EC2 instance. To connect to Slack you need to
+provide an API key using the `HUBOT_SLACK_TOKEN` variable as detailed in the
+[Slack SDK for Hubot](https://slackapi.github.io/hubot-slack/) documentation.
